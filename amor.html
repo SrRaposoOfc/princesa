@@ -1,0 +1,2161 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap"
+            rel="stylesheet"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Uma página especial feita com amor."
+        />
+        <title>Para Minha Eterna Pitica</title>
+        <style>
+            :root {
+                --moon-glow: #f5f3ce;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(
+                    to bottom,
+                    #050510 0%,
+                    #0b1026 100%
+                );
+                color: white;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                overflow-x: hidden;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            /* ── STARS ── */
+            .stars {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                background: url("https://www.transparenttextures.com/patterns/stardust.png");
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            /* ── MOON ── */
+            .moon {
+                position: fixed;
+                top: 40px;
+                right: 40px;
+                width: 100px;
+                height: 100px;
+                background: var(--moon-glow);
+                border-radius: 50%;
+                box-shadow:
+                    0 0 60px 20px rgba(245, 243, 206, 0.2),
+                    inset -15px -15px 20px rgba(0, 0, 0, 0.1),
+                    inset 10px 10px 15px rgba(255, 255, 255, 0.5);
+                z-index: 10;
+                cursor: pointer;
+                user-select: none;
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.5s ease;
+                animation: moon-float 6s ease-in-out infinite;
+            }
+            @keyframes moon-float {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+            .moon:active {
+                transform: scale(0.9) translateY(0);
+            }
+            .moon:focus-visible {
+                outline: 2px solid rgba(245, 243, 206, 0.8);
+                outline-offset: 6px;
+            }
+            .moon::before {
+                content: "";
+                position: absolute;
+                top: 20%;
+                left: 30%;
+                width: 15px;
+                height: 15px;
+                background: rgba(0, 0, 0, 0.05);
+                border-radius: 50%;
+                box-shadow:
+                    25px 35px 0 5px rgba(0, 0, 0, 0.05),
+                    -5px 45px 0 2px rgba(0, 0, 0, 0.05);
+            }
+
+            /* ── MOON RINGS ── */
+            .moon-ring {
+                position: fixed;
+                border-radius: 50%;
+                border: 2px solid rgba(245, 243, 206, 0.65);
+                pointer-events: none;
+                z-index: 9;
+                transform: translate(-50%, -50%);
+            }
+            @keyframes ring-expand {
+                0% {
+                    width: 110px;
+                    height: 110px;
+                    opacity: 0.7;
+                }
+                100% {
+                    width: 500px;
+                    height: 500px;
+                    opacity: 0;
+                }
+            }
+
+            /* ── SPARKLES ── */
+            .sparkle {
+                position: fixed;
+                pointer-events: none;
+                z-index: 11;
+                line-height: 1;
+                color: #f5f3ce;
+                text-shadow:
+                    0 0 8px rgba(245, 243, 206, 0.9),
+                    0 0 16px rgba(245, 243, 206, 0.5);
+            }
+            @keyframes sparkle-fly {
+                0% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1) rotate(0deg);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(var(--dx), var(--dy)) scale(0)
+                        rotate(var(--rot));
+                }
+            }
+
+            /* ── HEARTS ── */
+            .heart-explosion {
+                position: fixed;
+                pointer-events: none;
+                left: 0;
+                top: 0;
+                width: 0;
+                height: 0;
+                z-index: 9999;
+            }
+            @keyframes heart-pop {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.2) translate(0, 0);
+                }
+                30% {
+                    opacity: 1;
+                    transform: scale(1.1) translate(var(--tx, 0), var(--ty, 0));
+                }
+                70% {
+                    opacity: 1;
+                    transform: scale(0.9) translate(var(--tx, 0), var(--ty, 0));
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.1) translate(var(--tx, 0), var(--ty, 0));
+                }
+            }
+
+            /* ── TIMER ── */
+            .timer-container {
+                margin-top: 50px;
+                text-align: center;
+                z-index: 5;
+                background: rgba(0, 0, 0, 0.6);
+                padding: 15px 30px;
+                border-radius: 50px;
+                border: 1px solid #4a148c;
+                animation: timer-pulse 3s ease-in-out infinite;
+            }
+            @keyframes timer-pulse {
+                0%,
+                100% {
+                    box-shadow: 0 0 0 0 rgba(74, 20, 140, 0);
+                }
+                50% {
+                    box-shadow: 0 0 12px 4px rgba(74, 20, 140, 0.35);
+                }
+            }
+            .timer-container p {
+                margin: 0;
+                font-size: 0.8rem;
+                opacity: 0.8;
+            }
+            #timer {
+                font-family: monospace;
+                font-size: 1.4rem;
+                color: #e1bee7;
+                letter-spacing: 0.04em;
+            }
+
+            /* ══════════════════════════════════════
+           PERGAMINHO
+        ══════════════════════════════════════ */
+            .scroll-section {
+                margin-top: 44px;
+                margin-bottom: 60px;
+                z-index: 5;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .scroll-outer {
+                position: relative;
+                width: 360px;
+                filter: drop-shadow(0 10px 36px rgba(0, 0, 0, 0.7));
+                transition: filter 0.4s ease;
+            }
+            .scroll-outer:hover {
+                filter: drop-shadow(0 14px 44px rgba(200, 160, 48, 0.45));
+            }
+
+            /* Wooden rod */
+            .scroll-rod {
+                position: relative;
+                width: 100%;
+                height: 32px;
+                border-radius: 16px;
+                background: linear-gradient(
+                    180deg,
+                    #f0d88a 0%,
+                    #c8930e 18%,
+                    #7a4f0a 50%,
+                    #c8930e 82%,
+                    #f0d88a 100%
+                );
+                box-shadow:
+                    0 5px 14px rgba(0, 0, 0, 0.55),
+                    inset 0 3px 6px rgba(255, 255, 255, 0.28),
+                    inset 0 -3px 6px rgba(0, 0, 0, 0.35);
+                z-index: 3;
+                flex-shrink: 0;
+                cursor: pointer;
+            }
+            /* end caps */
+            .scroll-rod::before,
+            .scroll-rod::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 22px;
+                height: 40px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    ellipse at 35% 35%,
+                    #f0d88a 0%,
+                    #c8930e 40%,
+                    #7a4f0a 100%
+                );
+                box-shadow:
+                    3px 0 8px rgba(0, 0, 0, 0.5),
+                    inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+                    inset 2px 2px 4px rgba(255, 255, 255, 0.2);
+            }
+            .scroll-rod::before {
+                left: -10px;
+            }
+            .scroll-rod::after {
+                right: -10px;
+            }
+
+            /* Wax seal */
+            .scroll-seal {
+                position: absolute;
+                left: 50%;
+                top: 32px;
+                transform: translateX(-50%) translateY(-50%);
+                width: 54px;
+                height: 54px;
+                background: radial-gradient(
+                    circle at 38% 32%,
+                    #c0392b 0%,
+                    #8b1a1a 55%,
+                    #5c0f0f 100%
+                );
+                border-radius: 50%;
+                box-shadow:
+                    0 3px 12px rgba(0, 0, 0, 0.6),
+                    inset 0 2px 5px rgba(255, 200, 200, 0.15),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.4rem;
+                color: #ffccd5;
+                z-index: 10;
+                cursor: pointer;
+                transition:
+                    opacity 0.45s ease,
+                    transform 0.45s cubic-bezier(0.4, 0, 0.6, 1);
+            }
+            .scroll-seal::before {
+                content: "";
+                position: absolute;
+                inset: 4px;
+                border-radius: 50%;
+                border: 1.5px solid rgba(255, 180, 180, 0.25);
+            }
+            .scroll-outer.open .scroll-seal {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50%) scale(0.3)
+                    rotate(45deg);
+                pointer-events: none;
+            }
+
+            /* Parchment body */
+            .scroll-body {
+                max-height: 0;
+                overflow: hidden;
+                margin: 0 14px;
+                transition: max-height 2.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+                position: relative;
+                z-index: 2;
+            }
+            .scroll-outer.open .scroll-body {
+                max-height: var(--scroll-open-height, 4000px);
+            }
+
+            /* Reveal de cima pra baixo — o rolo de baixo desce enquanto
+               o conteúdo vai sendo revelado como um pergaminho real */
+            .scroll-parchment {
+                clip-path: inset(0 0 100% 0);
+                transition: clip-path 2.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+            }
+            .scroll-outer.open .scroll-parchment {
+                clip-path: inset(0 0 0% 0);
+            }
+
+            .scroll-parchment {
+                background:
+                    linear-gradient(
+                        90deg,
+                        rgba(139, 94, 38, 0.18) 0%,
+                        transparent 10%,
+                        transparent 90%,
+                        rgba(139, 94, 38, 0.18) 100%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        #e8c870 0%,
+                        #f5e2b0 8%,
+                        #fdf4dc 40%,
+                        #fef8eb 60%,
+                        #f5e2b0 92%,
+                        #e8c870 100%
+                    );
+                border-left: 2.5px solid rgba(139, 94, 38, 0.45);
+                border-right: 2.5px solid rgba(139, 94, 38, 0.45);
+                padding: 28px 36px 24px;
+                text-align: center;
+                position: relative;
+            }
+            .scroll-parchment::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                box-shadow:
+                    inset 8px 0 14px rgba(139, 94, 38, 0.12),
+                    inset -8px 0 14px rgba(139, 94, 38, 0.12);
+            }
+
+            .scroll-parchment h2 {
+                font-family: Georgia, "Times New Roman", serif;
+                color: #3d1c02;
+                font-size: 1.25rem;
+                margin: 0 0 6px;
+                letter-spacing: 0.06em;
+                text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+            }
+            .scroll-ornament {
+                display: block;
+                color: #c8930e;
+                font-size: 1.05rem;
+                margin: 0 0 4px;
+            }
+            .scroll-divider {
+                width: 55%;
+                height: 1px;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(100, 50, 10, 0.45),
+                    transparent
+                );
+                margin: 14px auto;
+            }
+            .scroll-parchment p {
+                font-family: Georgia, "Times New Roman", serif;
+                color: #5c2e00;
+                font-size: 0.96rem;
+                line-height: 1.75;
+                margin: 0 0 10px;
+                text-align: justify;
+            }
+            .scroll-parchment p:last-of-type {
+                margin-bottom: 0;
+            }
+            .scroll-signature {
+                display: block;
+                font-family: Georgia, "Times New Roman", serif;
+                color: #3d1c02;
+                font-size: 1.05rem;
+                font-style: italic;
+                margin-top: 16px;
+            }
+            .scroll-close-row {
+                margin-top: 20px;
+            }
+            .scroll-close-btn {
+                background: none;
+                border: 1.5px solid rgba(100, 50, 10, 0.4);
+                color: #7a4f0a;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 0.82rem;
+                padding: 5px 20px;
+                border-radius: 20px;
+                cursor: pointer;
+                transition:
+                    background 0.2s,
+                    color 0.2s;
+            }
+            .scroll-close-btn:hover {
+                background: rgba(100, 50, 10, 0.12);
+                color: #3d1c02;
+            }
+
+            /* Hint text */
+            .scroll-hint {
+                font-size: 0.82rem;
+                color: #c8a030;
+                opacity: 0.8;
+                margin: 0;
+                letter-spacing: 0.08em;
+                transition: opacity 0.5s ease;
+                pointer-events: none;
+                user-select: none;
+            }
+            .scroll-hint.hidden {
+                opacity: 0;
+            }
+
+            /* ── ONEKO ── */
+            #oneko {
+                position: fixed;
+                width: 32px;
+                height: 32px;
+                background-image: url("oneko_sprites.png");
+                background-size: 256px 128px;
+                image-rendering: pixelated;
+                pointer-events: none;
+                z-index: 9998;
+            }
+
+            /* ── MOBILE ── */
+            @media (max-width: 480px) {
+                .moon {
+                    width: 70px;
+                    height: 70px;
+                    top: 20px;
+                    right: 20px;
+                }
+                .timer-container {
+                    padding: 12px 20px;
+                }
+                #timer {
+                    font-size: 1rem;
+                }
+                .scroll-outer {
+                    width: calc(100vw - 48px);
+                }
+                .scroll-parchment {
+                    padding: 22px 22px 18px;
+                }
+                .scroll-parchment p {
+                    font-size: 0.88rem;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
+            /* ── MUSIC CARD ──────────────────────────────────────────────── */
+            .music-card-section {
+                width: 100%;
+                max-width: 760px;
+                margin: 60px auto 90px;
+                padding: 0 24px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .music-card {
+                background: rgba(11, 16, 38, 0.78);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 150, 200, 0.18);
+                border-radius: 28px;
+                padding: 36px 40px;
+                display: flex;
+                align-items: center;
+                gap: 40px;
+                box-shadow:
+                    0 0 80px rgba(255, 80, 150, 0.1),
+                    0 8px 40px rgba(0, 0, 0, 0.55);
+            }
+
+            /* Vinyl */
+            .card-vinyl-wrap {
+                flex-shrink: 0;
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                position: relative;
+            }
+
+            .card-vinyl-wrap svg {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                display: block;
+            }
+
+            .card-vinyl-wrap.spinning svg {
+                animation: vinyl-spin 5s linear infinite;
+            }
+
+            @keyframes vinyl-spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Info */
+            .card-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .card-song-title {
+                font-family: "Dancing Script", cursive;
+                font-size: 2rem;
+                color: #fff;
+                line-height: 1.1;
+                margin-bottom: 4px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .card-song-artist {
+                font-size: 0.88rem;
+                color: rgba(255, 150, 200, 0.8);
+                margin-bottom: 22px;
+                letter-spacing: 0.04em;
+            }
+
+            /* Waveform */
+            .card-wave {
+                display: flex;
+                align-items: flex-end;
+                gap: 3px;
+                height: 28px;
+                margin-bottom: 18px;
+            }
+
+            .card-wave-bar {
+                width: 3px;
+                border-radius: 2px;
+                background: rgba(255, 130, 190, 0.5);
+                transform-origin: bottom;
+                transition: background 0.3s;
+            }
+
+            .card-wave.playing .card-wave-bar {
+                background: rgba(255, 130, 190, 0.85);
+                animation: wave-bounce 0.9s ease-in-out infinite alternate;
+            }
+
+            @keyframes wave-bounce {
+                from {
+                    transform: scaleY(0.15);
+                }
+                to {
+                    transform: scaleY(1);
+                }
+            }
+
+            /* Progress */
+            .card-progress-wrap {
+                width: 100%;
+                height: 5px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+                cursor: pointer;
+                margin-bottom: 8px;
+                position: relative;
+            }
+
+            .card-progress-fill {
+                height: 100%;
+                width: 0%;
+                background: linear-gradient(
+                    to right,
+                    rgba(255, 80, 150, 0.9),
+                    rgba(255, 180, 220, 0.95)
+                );
+                border-radius: 5px;
+                pointer-events: none;
+                transition: width 0.25s linear;
+            }
+
+            .card-time-row {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.7rem;
+                color: rgba(255, 255, 255, 0.35);
+                margin-bottom: 22px;
+                letter-spacing: 0.03em;
+            }
+
+            /* Controls */
+            .card-controls {
+                display: flex;
+                justify-content: center;
+            }
+
+            .card-play-btn {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: none;
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 80, 150, 0.75),
+                    rgba(160, 0, 90, 0.75)
+                );
+                color: white;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow:
+                    0 0 24px rgba(255, 80, 150, 0.45),
+                    0 4px 12px rgba(0, 0, 0, 0.4);
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
+
+            .card-play-btn:hover {
+                transform: scale(1.1);
+                box-shadow:
+                    0 0 36px rgba(255, 80, 150, 0.65),
+                    0 4px 16px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Mobile */
+            @media (max-width: 600px) {
+                .music-card {
+                    flex-direction: column;
+                    padding: 28px 24px;
+                    gap: 24px;
+                    text-align: center;
+                }
+                .card-vinyl-wrap {
+                    width: 120px;
+                    height: 120px;
+                }
+                .card-vinyl-wrap svg {
+                    width: 120px;
+                    height: 120px;
+                }
+                .card-song-title {
+                    font-size: 1.6rem;
+                }
+                .card-wave {
+                    justify-content: center;
+                }
+            }
+
+            /* ── POLAROID GALLERY ────────────────────────────────────────── */
+            .gallery-section {
+                width: 100%;
+                max-width: 760px;
+                margin: 70px auto 10px;
+                padding: 0 24px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .section-heading {
+                text-align: center;
+                font-family: "Dancing Script", cursive;
+                font-size: 2rem;
+                color: rgba(255, 200, 230, 0.92);
+                margin-bottom: 36px;
+                letter-spacing: 0.04em;
+                text-shadow: 0 0 20px rgba(255, 100, 160, 0.4);
+            }
+
+            .polaroid-page {
+                display: none;
+                justify-content: center;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 36px;
+                min-height: 260px;
+                animation: fade-page 0.4s ease;
+            }
+
+            @keyframes fade-page {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .polaroid-page.active {
+                display: flex;
+            }
+
+            .polaroid {
+                background: #fffdf8;
+                padding: 12px 12px 44px;
+                width: 175px;
+                box-shadow:
+                    3px 5px 22px rgba(0, 0, 0, 0.55),
+                    0 0 40px rgba(255, 100, 160, 0.08);
+                transform: rotate(var(--rot, -2deg));
+                transition:
+                    transform 0.35s cubic-bezier(0.2, 0.8, 0.4, 1.2),
+                    box-shadow 0.3s;
+                cursor: zoom-in;
+                position: relative;
+            }
+
+            .polaroid:hover {
+                transform: rotate(0deg) scale(1.08) translateY(-6px);
+                box-shadow:
+                    6px 12px 40px rgba(0, 0, 0, 0.65),
+                    0 0 50px rgba(255, 100, 160, 0.2);
+                z-index: 5;
+            }
+
+            .polaroid img {
+                width: 100%;
+                height: 155px;
+                object-fit: cover;
+                display: block;
+                background: #ddd;
+            }
+
+            .polaroid-caption {
+                text-align: center;
+                font-family: "Dancing Script", cursive;
+                font-size: 0.95rem;
+                color: #555;
+                margin-top: 8px;
+                padding: 0 4px;
+                line-height: 1.3;
+            }
+
+            .gallery-nav {
+                display: none;
+                justify-content: center;
+                align-items: center;
+                gap: 22px;
+                margin-top: 32px;
+            }
+
+            .gallery-nav-btn {
+                background: rgba(255, 100, 160, 0.18);
+                border: 1px solid rgba(255, 100, 160, 0.38);
+                color: white;
+                border-radius: 50%;
+                width: 42px;
+                height: 42px;
+                font-size: 1.35rem;
+                cursor: pointer;
+                transition:
+                    background 0.2s,
+                    transform 0.15s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+            }
+
+            .gallery-nav-btn:hover {
+                background: rgba(255, 100, 160, 0.38);
+                transform: scale(1.1);
+            }
+
+            .gallery-dots {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .gallery-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 150, 200, 0.3);
+                border: 1px solid rgba(255, 150, 200, 0.5);
+                cursor: pointer;
+                transition:
+                    background 0.25s,
+                    transform 0.2s;
+            }
+
+            .gallery-dot.active {
+                background: rgba(255, 100, 160, 0.85);
+                transform: scale(1.3);
+            }
+
+            /* ── LIGHTBOX ─────────────────────────────────────────────────── */
+            .lightbox {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.88);
+                z-index: 9000;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 14px;
+                cursor: zoom-out;
+                animation: fade-page 0.25s ease;
+            }
+
+            .lightbox.open {
+                display: flex;
+            }
+
+            .lightbox img {
+                max-width: 90vw;
+                max-height: 78vh;
+                object-fit: contain;
+                border: 3px solid rgba(255, 255, 255, 0.12);
+                border-radius: 4px;
+                box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+            }
+
+            .lightbox-caption {
+                font-family: "Dancing Script", cursive;
+                font-size: 1.25rem;
+                color: rgba(255, 200, 230, 0.9);
+                text-align: center;
+            }
+
+            /* ── LOVE REASONS ────────────────────────────────────────────── */
+            .reasons-section {
+                width: 100%;
+                max-width: 760px;
+                margin: 60px auto 80px;
+                padding: 0 24px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .reasons-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+                gap: 20px;
+            }
+
+            .reason-card {
+                perspective: 900px;
+                height: 158px;
+                cursor: pointer;
+            }
+
+            .reason-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transition: transform 0.62s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .reason-card.flipped .reason-inner {
+                transform: rotateY(180deg);
+            }
+
+            .reason-front,
+            .reason-back {
+                position: absolute;
+                inset: 0;
+                border-radius: 16px;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 16px;
+            }
+
+            .reason-front {
+                background: rgba(11, 16, 38, 0.75);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 150, 200, 0.22);
+                flex-direction: column;
+                gap: 10px;
+                transition: border-color 0.3s;
+            }
+
+            .reason-card:hover .reason-front {
+                border-color: rgba(255, 150, 200, 0.55);
+            }
+
+            .reason-front-icon {
+                font-size: 2.1rem;
+            }
+
+            .reason-front-hint {
+                font-size: 0.67rem;
+                color: rgba(255, 150, 200, 0.55);
+                text-align: center;
+                letter-spacing: 0.04em;
+            }
+
+            .reason-back {
+                background: linear-gradient(
+                    145deg,
+                    rgba(160, 0, 90, 0.5),
+                    rgba(70, 0, 55, 0.7)
+                );
+                border: 1px solid rgba(255, 100, 160, 0.3);
+                transform: rotateY(180deg);
+                text-align: center;
+                font-family: "Dancing Script", cursive;
+                font-size: 1.02rem;
+                color: #ffe4f2;
+                line-height: 1.5;
+                padding: 20px;
+            }
+
+            /* ── SECTION DIVIDER ─────────────────────────────────────────── */
+            .section-divider {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+                text-align: center;
+                color: rgba(255, 150, 200, 0.35);
+                font-size: 1rem;
+                letter-spacing: 0.5em;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* ── MOBILE (new sections) ───────────────────────────────────── */
+            @media (max-width: 480px) {
+                .polaroid {
+                    width: 140px;
+                    padding-bottom: 36px;
+                }
+                .polaroid img {
+                    height: 125px;
+                }
+                .reasons-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .music-player {
+                    min-width: 180px;
+                }
+                .section-heading {
+                    font-size: 1.55rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="stars" aria-hidden="true"></div>
+
+        <!-- Lua -->
+        <div
+            class="moon"
+            id="moon"
+            role="button"
+            tabindex="0"
+            aria-label="Lua mágica — clique para criar magia"
+            onclick="makeMagic()"
+        ></div>
+
+        <!-- Contador -->
+        <div
+            class="timer-container"
+            aria-live="polite"
+            aria-label="Tempo juntos"
+        >
+            <p>Juntos há:</p>
+            <div id="timer">0a 00d 00h 00m 00s</div>
+        </div>
+
+        <!-- Pergaminho -->
+        <section class="scroll-section" aria-label="Mensagem especial">
+            <div class="scroll-outer" id="scrollOuter">
+                <!-- Rolo superior -->
+                <div
+                    class="scroll-rod"
+                    id="scrollRodTop"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Desenrolar o pergaminho"
+                    onclick="openScroll()"
+                ></div>
+
+                <!-- Selo de cera -->
+                <div
+                    class="scroll-seal"
+                    id="scrollSeal"
+                    aria-hidden="true"
+                    onclick="openScroll()"
+                >
+                    ♥
+                </div>
+
+                <!-- Corpo do pergaminho -->
+                <div class="scroll-body" id="scrollBody" aria-hidden="true">
+                    <div class="scroll-parchment">
+                        <span class="scroll-ornament">✦ ✿ ✦</span>
+                        <h2>Para minha eterna pitica</h2>
+                        <div class="scroll-divider"></div>
+
+                        <p>
+                            Ultimamente estamos passando por momentos não
+                            agradáveis eu sei, cada vez mais eu vejo que o
+                            problema sou eu e não você, é egoísta da minha parte
+                            mas deixa eu continuar amando você?
+                        </p>
+                        <p>
+                            Eu sei que às vezes eu pareço só estar cagando mas a
+                            maior parte é que eu me perco no meio de tanta coisa
+                            e sentimentos, talvez não seja suficiente mas essas
+                            são algumas formas que eu te amo silenciosamente
+                            tentando abandonar a mente e seguir o coração:
+                        </p>
+
+                        <div class="scroll-divider"></div>
+
+                        <p>
+                            Muitas vezes eu rezo pra que você consiga dormir em
+                            paz, para ser protegida no caminho do seu serviço.
+                        </p>
+                        <p>
+                            Escuto qualquer música que me alegre pensando em
+                            você.
+                        </p>
+                        <p>
+                            Passo em lojas que têm roupa, salgados, ursinhos
+                            gigantes de pelúcia, lasanha e penso
+                            <em>"caramba, ela iria amar isso"</em>.
+                        </p>
+                        <p>
+                            Olho o céu escuro, liso e calmo e me sinto muito
+                            perto de você.
+                        </p>
+                        <p>
+                            Eu gostaria de listar mais, só que são coisas que
+                            duram um momento, não é algo pensado que é para se
+                            lembrar.
+                        </p>
+
+                        <div class="scroll-divider"></div>
+
+                        <p>
+                            Não sei os seus sentimentos, porém os meus estão
+                            escritos nesse texto.
+                        </p>
+                        <p>
+                            Eu te amo minha pequena, são quase 3 anos de
+                            história que vencem qualquer filme indicado ao
+                            Oscar, me perdoe por mesmo depois de tudo ainda te
+                            fazer chorar, eu não vou prometer que vai dar, mas
+                            eu posso prometer que vou tentar ser o namorado que
+                            você merece.
+                        </p>
+
+                        <div class="scroll-divider"></div>
+
+                        <p>
+                            Quando duvidar do que eu sinto, volte aqui e leia.
+                            Garanto que é exatamente isso, e se mudar, com
+                            certeza vai ser pra mais.
+                        </p>
+                        <p>Eu amo você, minha eterna pitica.</p>
+
+                        <div class="scroll-divider"></div>
+                        <span class="scroll-signature"
+                            >— Para sempre seu Tamaki ♥</span
+                        >
+
+                        <div class="scroll-close-row">
+                            <button
+                                class="scroll-close-btn"
+                                onclick="closeScroll(event)"
+                                aria-label="Enrolar o pergaminho"
+                            >
+                                Enrolar ✕
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rolo inferior -->
+                <div
+                    class="scroll-rod"
+                    id="scrollRodBottom"
+                    aria-hidden="true"
+                ></div>
+            </div>
+
+            <p class="scroll-hint" id="scrollHint">
+                ✦ Clique para desenrolar ✦
+            </p>
+        </section>
+
+        <!-- Divisor -->
+        <div class="section-divider" aria-hidden="true">✦ ✦ ✦</div>
+
+        <!-- Galeria Polaroid -->
+        <section
+            class="gallery-section"
+            aria-label="Nossa galeria de fotos"
+            id="gallerySection"
+        >
+            <h2 class="section-heading">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="28"
+                    height="28"
+                    fill="none"
+                    stroke="rgba(255,200,230,0.9)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="
+                        vertical-align: middle;
+                        margin-right: 10px;
+                        margin-bottom: 4px;
+                    "
+                >
+                    <path
+                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+                    />
+                    <circle cx="12" cy="13" r="4" /></svg
+                >Nossa Galeria
+            </h2>
+            <div id="polaroidPages"></div>
+            <div class="gallery-nav" id="galleryNav">
+                <button
+                    class="gallery-nav-btn"
+                    id="galleryPrevBtn"
+                    onclick="galleryPrev()"
+                    aria-label="Página anterior"
+                >
+                    &#8249;
+                </button>
+                <div class="gallery-dots" id="galleryDots"></div>
+                <button
+                    class="gallery-nav-btn"
+                    id="galleryNextBtn"
+                    onclick="galleryNext()"
+                    aria-label="Próxima página"
+                >
+                    &#8250;
+                </button>
+            </div>
+        </section>
+
+        <!-- Divisor -->
+        <div class="section-divider" aria-hidden="true">✦ ✦ ✦</div>
+
+        <!-- Razões pelas quais te amo -->
+        <section class="reasons-section" aria-label="Razões pelas quais te amo">
+            <h2 class="section-heading">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="28"
+                    height="28"
+                    fill="none"
+                    stroke="rgba(255,200,230,0.9)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="
+                        vertical-align: middle;
+                        margin-right: 10px;
+                        margin-bottom: 4px;
+                    "
+                >
+                    <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                    />
+                    <polyline points="22,6 12,13 2,6" /></svg
+                >Por que eu te amo
+            </h2>
+            <div class="reasons-grid" id="reasonsGrid"></div>
+        </section>
+
+        <!-- Lightbox -->
+        <div
+            class="lightbox"
+            id="lightbox"
+            onclick="closeLightbox()"
+            aria-label="Fechar foto"
+            role="dialog"
+        >
+            <img id="lightboxImg" src="" alt="" />
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+
+        <!-- Music Card -->
+        <section
+            class="music-card-section"
+            id="musicCardSection"
+            style="display: none"
+            aria-label="Player de música"
+        >
+            <h2 class="section-heading">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="28"
+                    height="28"
+                    fill="none"
+                    stroke="rgba(255,200,230,0.9)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="
+                        vertical-align: middle;
+                        margin-right: 10px;
+                        margin-bottom: 4px;
+                    "
+                >
+                    <path d="M9 18V5l12-2v13" />
+                    <circle cx="6" cy="18" r="3" />
+                    <circle cx="18" cy="16" r="3" /></svg
+                >Nossa Música
+            </h2>
+            <div class="music-card">
+                <!-- Vinyl -->
+                <div class="card-vinyl-wrap" id="cardVinyl">
+                    <svg
+                        viewBox="0 0 150 150"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <circle cx="75" cy="75" r="74" fill="#0f0820" />
+                        <circle
+                            cx="75"
+                            cy="75"
+                            r="68"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.04)"
+                            stroke-width="1.5"
+                        />
+                        <circle
+                            cx="75"
+                            cy="75"
+                            r="61"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.04)"
+                            stroke-width="1.5"
+                        />
+                        <circle
+                            cx="75"
+                            cy="75"
+                            r="54"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.04)"
+                            stroke-width="1.5"
+                        />
+                        <circle
+                            cx="75"
+                            cy="75"
+                            r="47"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.04)"
+                            stroke-width="1.5"
+                        />
+                        <circle
+                            cx="75"
+                            cy="75"
+                            r="40"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.04)"
+                            stroke-width="1.5"
+                        />
+                        <circle cx="75" cy="75" r="32" fill="#2a0e50" />
+                        <circle cx="75" cy="75" r="24" fill="#1a0838" />
+                        <circle cx="75" cy="75" r="6" fill="#0b1026" />
+                        <ellipse
+                            cx="62"
+                            cy="52"
+                            rx="14"
+                            ry="9"
+                            fill="rgba(255,255,255,0.035)"
+                            transform="rotate(-35 62 52)"
+                        />
+                    </svg>
+                </div>
+                <!-- Info -->
+                <div class="card-info">
+                    <div class="card-song-title" id="cardTitle">
+                        Nossa Música
+                    </div>
+                    <div class="card-song-artist" id="cardArtist"></div>
+                    <!-- Waveform -->
+                    <div class="card-wave" id="cardWave">
+                        <div
+                            class="card-wave-bar"
+                            style="height: 8px; animation-delay: 0s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 15px; animation-delay: 0.1s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 22px; animation-delay: 0.2s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 17px; animation-delay: 0.15s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 26px; animation-delay: 0.05s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 19px; animation-delay: 0.25s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 11px; animation-delay: 0.3s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 24px; animation-delay: 0.12s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 16px; animation-delay: 0.22s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 9px; animation-delay: 0.08s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 21px; animation-delay: 0.18s"
+                        ></div>
+                        <div
+                            class="card-wave-bar"
+                            style="height: 14px; animation-delay: 0.28s"
+                        ></div>
+                    </div>
+                    <!-- Progress -->
+                    <div
+                        class="card-progress-wrap"
+                        id="cardProgressWrap"
+                        role="slider"
+                        aria-label="Progresso da música"
+                    >
+                        <div
+                            class="card-progress-fill"
+                            id="cardProgressFill"
+                        ></div>
+                    </div>
+                    <div class="card-time-row">
+                        <span id="cardTimeCurrent">0:00</span>
+                        <span id="cardTimeTotal">0:00</span>
+                    </div>
+                    <!-- Play button -->
+                    <div class="card-controls">
+                        <button
+                            class="card-play-btn"
+                            id="cardPlayBtn"
+                            onclick="toggleCardMusic()"
+                            aria-label="Tocar"
+                        >
+                            <svg
+                                id="cardPlayIcon"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="22"
+                                height="22"
+                                fill="white"
+                            >
+                                <polygon points="6,3 20,12 6,21" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <audio id="cardAudio" loop preload="metadata"></audio>
+        </section>
+
+        <!-- Oneko -->
+        <div id="oneko" aria-hidden="true"></div>
+
+        <script>
+            // ── TIMER ──────────────────────────────────────────────────────
+            const start = new Date("2023-06-27T00:00:00");
+
+            function updateTimer() {
+                const diff = Date.now() - start;
+                const MS_YEAR = 365.25 * 24 * 3600 * 1000;
+                const y = Math.floor(diff / MS_YEAR);
+                const rem = diff - y * MS_YEAR;
+                const d = Math.floor(rem / 86400000);
+                const h = Math.floor((rem / 3600000) % 24);
+                const m = Math.floor((rem / 60000) % 60);
+                const s = Math.floor((rem / 1000) % 60);
+                const pad = (n) => String(n).padStart(2, "0");
+                document.getElementById("timer").textContent =
+                    `${y}a ${d}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+            }
+            setInterval(updateTimer, 1000);
+            updateTimer();
+
+            // ── MOON ───────────────────────────────────────────────────────
+            const SHADOW_DEFAULT =
+                "0 0 60px 20px rgba(245,243,206,.2)," +
+                "inset -15px -15px 20px rgba(0,0,0,.1)," +
+                "inset 10px 10px 15px rgba(255,255,255,.5)";
+            const SHADOW_GLOW =
+                "0 0 120px 50px rgba(245,243,206,.65)," +
+                "inset -15px -15px 20px rgba(0,0,0,.1)," +
+                "inset 10px 10px 15px rgba(255,255,255,.5)";
+
+            document.getElementById("moon").addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    makeMagic();
+                }
+            });
+
+            function makeMagic() {
+                const moon = document.getElementById("moon");
+                const rect = moon.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+
+                // 1. Pulso de brilho na lua
+                moon.style.boxShadow = SHADOW_GLOW;
+                setTimeout(() => {
+                    moon.style.boxShadow = SHADOW_DEFAULT;
+                }, 700);
+
+                // 2. Anéis se expandindo
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const ring = document.createElement("div");
+                        ring.className = "moon-ring";
+                        ring.style.left = cx + "px";
+                        ring.style.top = cy + "px";
+                        const dur = 0.85 + i * 0.18;
+                        ring.style.animation = `ring-expand ${dur}s ease-out forwards`;
+                        document.body.appendChild(ring);
+                        setTimeout(() => ring.remove(), dur * 1000 + 100);
+                    }, i * 180);
+                }
+
+                // 3. Partículas / faíscas saindo da lua em todas as direções
+                const glyphs = ["✦", "✧", "⋆", "·", "★", "✦", "✧"];
+                for (let i = 0; i < 24; i++) {
+                    setTimeout(() => {
+                        const sp = document.createElement("div");
+                        sp.className = "sparkle";
+                        sp.textContent =
+                            glyphs[Math.floor(Math.random() * glyphs.length)];
+                        const angle = Math.random() * Math.PI * 2;
+                        const dist = 70 + Math.random() * 220;
+                        const dx = (Math.cos(angle) * dist).toFixed(1);
+                        const dy = (Math.sin(angle) * dist).toFixed(1);
+                        const rot =
+                            (-200 + Math.random() * 400).toFixed(0) + "deg";
+                        const dur = (0.55 + Math.random() * 0.9).toFixed(2);
+                        const size = (0.65 + Math.random() * 0.85).toFixed(2);
+                        sp.style.cssText = `left:${cx}px;top:${cy}px;font-size:${size}rem;`;
+                        sp.style.setProperty("--dx", dx + "px");
+                        sp.style.setProperty("--dy", dy + "px");
+                        sp.style.setProperty("--rot", rot);
+                        sp.style.animation = `sparkle-fly ${dur}s ease-out forwards`;
+                        document.body.appendChild(sp);
+                        setTimeout(() => sp.remove(), dur * 1000 + 100);
+                    }, Math.random() * 320);
+                }
+
+                // 4. Corações explodindo
+                setTimeout(() => spawnHearts(cx, cy), 250);
+            }
+
+            // ── HEARTS ─────────────────────────────────────────────────────
+            function spawnHearts(cx, cy) {
+                const colors = [
+                    "#ff4e8e",
+                    "#ff86c8",
+                    "#ffa2d5",
+                    "#fff2f7",
+                    "#d4006d",
+                    "#f41b46",
+                ];
+                const n = 13;
+                const wrap = document.createElement("div");
+                wrap.className = "heart-explosion";
+                wrap.style.left = cx + "px";
+                wrap.style.top = cy + "px";
+                for (let i = 0; i < n; i++) {
+                    const h = document.createElement("div");
+                    h.innerHTML = `<svg width="24" height="22" viewBox="0 0 24 22" fill="${colors[i % colors.length]}"><path d="M12 19.5C12 19.5 2.5 13 2.5 7.5 2.5 4.46 4.96 2 8 2c1.74 0 3.28.88 4 2.22C12.72 2.88 14.26 2 16 2c3.04 0 5.5 2.46 5.5 5.5C21.5 13 12 19.5 12 19.5z"/></svg>`;
+                    const ang = ((Math.PI * 2) / n) * i + Math.random() * 0.5;
+                    const r = 48 + Math.random() * 30;
+                    h.style.cssText =
+                        "position:absolute;left:-12px;top:-11px;opacity:0";
+                    h.style.setProperty(
+                        "--tx",
+                        (Math.cos(ang) * r).toFixed(1) + "px",
+                    );
+                    h.style.setProperty(
+                        "--ty",
+                        (Math.sin(ang) * r - 12).toFixed(1) + "px",
+                    );
+                    h.style.animation =
+                        "heart-pop .85s cubic-bezier(.65,-.14,.43,1.38) forwards";
+                    h.style.animationDelay =
+                        (Math.random() * 0.1).toFixed(3) + "s";
+                    wrap.appendChild(h);
+                }
+                document.body.appendChild(wrap);
+                setTimeout(() => wrap.remove(), 1100);
+            }
+
+            // ── PERGAMINHO ─────────────────────────────────────────────────
+            function openScroll() {
+                const outer = document.getElementById("scrollOuter");
+                if (outer.classList.contains("open")) return;
+                // Mede a altura real do conteúdo antes de abrir
+                const body = document.getElementById("scrollBody");
+                body.style.maxHeight = "none";
+                const realH = body.scrollHeight;
+                body.style.maxHeight = "";
+                outer.style.setProperty("--scroll-open-height", realH + "px");
+                outer.classList.add("open");
+                body.setAttribute("aria-hidden", "false");
+                document.getElementById("scrollHint").classList.add("hidden");
+            }
+
+            function closeScroll(e) {
+                if (e) e.stopPropagation();
+                const outer = document.getElementById("scrollOuter");
+                if (!outer.classList.contains("open")) return;
+                outer.classList.remove("open");
+                document
+                    .getElementById("scrollBody")
+                    .setAttribute("aria-hidden", "true");
+                document
+                    .getElementById("scrollHint")
+                    .classList.remove("hidden");
+            }
+
+            document
+                .getElementById("scrollRodTop")
+                .addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        document
+                            .getElementById("scrollOuter")
+                            .classList.contains("open")
+                            ? closeScroll()
+                            : openScroll();
+                    }
+                });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeScroll();
+            });
+
+            // ── ONEKO ──────────────────────────────────────────────────────
+            const oneko = document.getElementById("oneko");
+            let curX = 100,
+                curY = 100,
+                targetX = 100,
+                targetY = 100;
+            let frameCount = 0,
+                lastT = 0,
+                idleT = 0;
+
+            const SPRITES = {
+                idle: [3, 3],
+                alert: [7, 3],
+                run: {
+                    N: [
+                        [1, 2],
+                        [1, 3],
+                    ],
+                    S: [
+                        [6, 3],
+                        [7, 2],
+                    ],
+                    W: [
+                        [4, 2],
+                        [4, 3],
+                    ],
+                    E: [
+                        [3, 0],
+                        [3, 1],
+                    ],
+                    NW: [
+                        [1, 0],
+                        [1, 1],
+                    ],
+                    NE: [
+                        [0, 2],
+                        [0, 3],
+                    ],
+                    SW: [
+                        [5, 3],
+                        [6, 1],
+                    ],
+                    SE: [
+                        [5, 1],
+                        [5, 2],
+                    ],
+                },
+                sleep: [
+                    [2, 0],
+                    [2, 1],
+                ],
+            };
+
+            function spr(c) {
+                oneko.style.backgroundPosition = `${c[0] * -32}px ${c[1] * -32}px`;
+            }
+
+            document.addEventListener("mousemove", (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+            document.addEventListener(
+                "touchmove",
+                (e) => {
+                    targetX = e.touches[0].clientX;
+                    targetY = e.touches[0].clientY;
+                },
+                { passive: true },
+            );
+
+            function loop(t) {
+                const dx = curX - targetX;
+                const dy = curY - targetY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (t - lastT > 150) {
+                    lastT = t;
+                    frameCount++;
+
+                    if (dist > 32) {
+                        idleT = 0;
+                        curX -= (dx / dist) * 12;
+                        curY -= (dy / dist) * 12;
+                        let d = "";
+                        if (dy / dist > 0.5) d = "N";
+                        else if (dy / dist < -0.5) d = "S";
+                        if (dx / dist > 0.5) d += "W";
+                        else if (dx / dist < -0.5) d += "E";
+                        spr((SPRITES.run[d] || SPRITES.run.S)[frameCount % 2]);
+                    } else {
+                        idleT++;
+                        if (idleT > 20)
+                            spr(SPRITES.sleep[Math.floor(frameCount / 4) % 2]);
+                        else if (idleT > 1) spr(SPRITES.idle);
+                        else spr(SPRITES.alert);
+                    }
+                }
+
+                oneko.style.left = `${curX - 16}px`;
+                oneko.style.top = `${curY - 16}px`;
+                requestAnimationFrame(loop);
+            }
+            requestAnimationFrame(loop);
+
+            // ── SCROLL AO TOPO ─────────────────────────────────────────────
+            history.scrollRestoration = "manual";
+            window.scrollTo(0, 0);
+
+            // ── GALERIA POLAROID ───────────────────────────────────────────
+            // ATENÇÃO: esta lista é gerenciada automaticamente pelo script
+            // atualizar_fotos.py — não edite manualmente entre as marcações.
+            /* FOTOS_INICIO */
+            const FOTOS_DATA = [
+                {
+                    arquivo: "0491456c-07e7-41a8-a95f-1fcefd0f8177.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "0a20f496-9423-4d44-bb98-a479ae0e1c1c.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "0bfd1694-1011-4a64-8506-c27576f3539f.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "34810b7f-644f-4d24-b2ec-4e3381d6868f.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "60024eb0-4740-4c77-9c6e-fa4cfe6e36d9.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "951d1dd4-5d2b-4d20-9d40-5359ff7d0d78.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "a9d902f2-360d-4730-b648-e3690b2b6040.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "bdf64904-1324-495b-922a-b799de1aa7bb.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "dec2181a-ede0-42d0-bed2-5b2d25429e3e.jpg",
+                    legenda: "",
+                },
+                {
+                    arquivo: "e68af142-de18-471b-b146-07612e6cf13f.jpg",
+                    legenda: "",
+                },
+            ];
+            /* FOTOS_FIM */
+
+            const FOTOS_PER_PAGE = 4;
+            let galleryPage = 0;
+            let galleryPages = [];
+            let galleryData = [];
+
+            const ROTATIONS = [
+                -4, 2.5, -1.8, 3.2, -2.8, 1.5, -3.5, 2, -1.2, 3.8,
+            ];
+
+            function loadGallery() {
+                if (!Array.isArray(FOTOS_DATA) || FOTOS_DATA.length === 0)
+                    return;
+                galleryData = FOTOS_DATA;
+                buildGallery(FOTOS_DATA);
+            }
+
+            function buildGallery(fotos) {
+                const container = document.getElementById("polaroidPages");
+                const dotsContainer = document.getElementById("galleryDots");
+                const totalPages = Math.ceil(fotos.length / FOTOS_PER_PAGE);
+
+                for (let p = 0; p < totalPages; p++) {
+                    const slice = fotos.slice(
+                        p * FOTOS_PER_PAGE,
+                        (p + 1) * FOTOS_PER_PAGE,
+                    );
+                    const pageDiv = document.createElement("div");
+                    pageDiv.className =
+                        "polaroid-page" + (p === 0 ? " active" : "");
+
+                    slice.forEach((foto, idx) => {
+                        const globalIdx = p * FOTOS_PER_PAGE + idx;
+                        const rot = ROTATIONS[globalIdx % ROTATIONS.length];
+                        const polaroid = document.createElement("div");
+                        polaroid.className = "polaroid";
+                        polaroid.style.setProperty("--rot", rot + "deg");
+                        polaroid.setAttribute("role", "button");
+                        polaroid.setAttribute("tabindex", "0");
+                        polaroid.setAttribute(
+                            "aria-label",
+                            foto.legenda || "Foto nossa",
+                        );
+                        polaroid.innerHTML = `
+                            <img src="fotos/${foto.arquivo}" alt="${foto.legenda || "Foto nossa"}" loading="lazy" />
+                            <div class="polaroid-caption">${foto.legenda || ""}</div>
+                        `;
+                        polaroid.addEventListener("click", () =>
+                            openLightbox(foto),
+                        );
+                        polaroid.addEventListener("keydown", (e) => {
+                            if (e.key === "Enter" || e.key === " ")
+                                openLightbox(foto);
+                        });
+                        pageDiv.appendChild(polaroid);
+                    });
+
+                    container.appendChild(pageDiv);
+                    galleryPages.push(pageDiv);
+
+                    // Dot de navegação
+                    const dot = document.createElement("div");
+                    dot.className = "gallery-dot" + (p === 0 ? " active" : "");
+                    dot.setAttribute("role", "button");
+                    dot.setAttribute("tabindex", "0");
+                    dot.setAttribute("aria-label", `Página ${p + 1}`);
+                    dot.addEventListener("click", () => goToGalleryPage(p));
+                    dot.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter" || e.key === " ")
+                            goToGalleryPage(p);
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+
+                if (totalPages > 1) {
+                    document.getElementById("galleryNav").style.display =
+                        "flex";
+                }
+            }
+
+            function goToGalleryPage(newPage) {
+                galleryPages[galleryPage].classList.remove("active");
+                document
+                    .querySelectorAll(".gallery-dot")
+                    [galleryPage].classList.remove("active");
+                galleryPage = newPage;
+                galleryPages[galleryPage].classList.add("active");
+                document
+                    .querySelectorAll(".gallery-dot")
+                    [galleryPage].classList.add("active");
+            }
+
+            function galleryPrev() {
+                goToGalleryPage(
+                    (galleryPage - 1 + galleryPages.length) %
+                        galleryPages.length,
+                );
+            }
+
+            function galleryNext() {
+                goToGalleryPage((galleryPage + 1) % galleryPages.length);
+            }
+
+            // Swipe para mobile na galeria
+            (function () {
+                let touchStartX = 0;
+                const pages = document.getElementById("polaroidPages");
+                pages.addEventListener(
+                    "touchstart",
+                    (e) => {
+                        touchStartX = e.touches[0].clientX;
+                    },
+                    { passive: true },
+                );
+                pages.addEventListener(
+                    "touchend",
+                    (e) => {
+                        const diff = touchStartX - e.changedTouches[0].clientX;
+                        if (Math.abs(diff) > 50)
+                            diff > 0 ? galleryNext() : galleryPrev();
+                    },
+                    { passive: true },
+                );
+            })();
+
+            loadGallery();
+
+            // ── LIGHTBOX ───────────────────────────────────────────────────
+            function openLightbox(foto) {
+                const lb = document.getElementById("lightbox");
+                document.getElementById("lightboxImg").src =
+                    "fotos/" + foto.arquivo;
+                document.getElementById("lightboxImg").alt =
+                    foto.legenda || "Foto nossa";
+                document.getElementById("lightboxCaption").textContent =
+                    foto.legenda || "";
+                lb.classList.add("open");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeLightbox() {
+                document.getElementById("lightbox").classList.remove("open");
+                document.body.style.overflow = "";
+            }
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeLightbox();
+            });
+
+            // ── MUSIC CARD ─────────────────────────────────────────────────
+            // ATENÇÃO: gerenciado pelo atualizar_fotos.py — não edite entre as marcações.
+            /* MUSICA_INICIO */
+            const MUSICA_DATA = {
+                arquivo: "BRUNO.mp3",
+                nome: "Oque eu escuto pensando em você?",
+                artista: "Bruninho",
+            };
+            /* MUSICA_FIM */
+
+            let cardPlaying = false;
+
+            const CARD_SVG_PLAY = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="white"><polygon points="6,3 20,12 6,21"/></svg>`;
+            const CARD_SVG_PAUSE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="white"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>`;
+
+            function fmtTime(s) {
+                const m = Math.floor(s / 60);
+                const ss = Math.floor(s % 60);
+                return m + ":" + String(ss).padStart(2, "0");
+            }
+
+            function loadMusic() {
+                if (!MUSICA_DATA || !MUSICA_DATA.arquivo) return;
+
+                const audio = document.getElementById("cardAudio");
+                audio.src = "musica/" + MUSICA_DATA.arquivo;
+
+                document.getElementById("cardTitle").textContent =
+                    MUSICA_DATA.nome || "Nossa Música";
+                document.getElementById("cardArtist").textContent =
+                    MUSICA_DATA.artista || "";
+
+                // Progresso
+                audio.addEventListener("timeupdate", () => {
+                    if (!audio.duration) return;
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    document.getElementById("cardProgressFill").style.width =
+                        pct + "%";
+                    document.getElementById("cardTimeCurrent").textContent =
+                        fmtTime(audio.currentTime);
+                });
+
+                audio.addEventListener("loadedmetadata", () => {
+                    document.getElementById("cardTimeTotal").textContent =
+                        fmtTime(audio.duration);
+                });
+
+                // Seek clicando na barra
+                document
+                    .getElementById("cardProgressWrap")
+                    .addEventListener("click", (e) => {
+                        if (!audio.duration) return;
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        audio.currentTime =
+                            ((e.clientX - rect.left) / rect.width) *
+                            audio.duration;
+                    });
+
+                document.getElementById("musicCardSection").style.display =
+                    "block";
+            }
+
+            function toggleCardMusic() {
+                const audio = document.getElementById("cardAudio");
+                const vinyl = document.getElementById("cardVinyl");
+                const wave = document.getElementById("cardWave");
+                const btn = document.getElementById("cardPlayBtn");
+
+                if (cardPlaying) {
+                    audio.pause();
+                    vinyl.classList.remove("spinning");
+                    wave.classList.remove("playing");
+                    btn.innerHTML = CARD_SVG_PLAY;
+                    btn.setAttribute("aria-label", "Tocar");
+                    cardPlaying = false;
+                } else {
+                    audio.play().catch(() => {});
+                    vinyl.classList.add("spinning");
+                    wave.classList.add("playing");
+                    btn.innerHTML = CARD_SVG_PAUSE;
+                    btn.setAttribute("aria-label", "Pausar");
+                    cardPlaying = true;
+                }
+            }
+
+            document
+                .getElementById("cardPlayBtn")
+                .addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        toggleCardMusic();
+                    }
+                });
+
+            loadMusic();
+
+            // ── AUTOPLAY ───────────────────────────────────────────────────
+            // Tenta tocar assim que o usuário interagir com a página
+            function tryAutoplay() {
+                const audio = document.getElementById("cardAudio");
+                if (!audio || !audio.src || cardPlaying) return;
+                audio
+                    .play()
+                    .then(() => {
+                        document
+                            .getElementById("cardVinyl")
+                            .classList.add("spinning");
+                        document
+                            .getElementById("cardWave")
+                            .classList.add("playing");
+                        document.getElementById("cardPlayBtn").innerHTML =
+                            CARD_SVG_PAUSE;
+                        document
+                            .getElementById("cardPlayBtn")
+                            .setAttribute("aria-label", "Pausar");
+                        cardPlaying = true;
+                        // Remove os listeners após sucesso
+                        ["click", "keydown", "touchstart"].forEach((ev) =>
+                            document.removeEventListener(ev, tryAutoplay),
+                        );
+                    })
+                    .catch(() => {});
+            }
+
+            // Tenta direto (funciona em alguns navegadores)
+            window.addEventListener("load", () => {
+                const audio = document.getElementById("cardAudio");
+                if (!audio) return;
+                audio
+                    .play()
+                    .then(() => {
+                        document
+                            .getElementById("cardVinyl")
+                            .classList.add("spinning");
+                        document
+                            .getElementById("cardWave")
+                            .classList.add("playing");
+                        document.getElementById("cardPlayBtn").innerHTML =
+                            CARD_SVG_PAUSE;
+                        document
+                            .getElementById("cardPlayBtn")
+                            .setAttribute("aria-label", "Pausar");
+                        cardPlaying = true;
+                    })
+                    .catch(() => {
+                        // Navegador bloqueou — aguarda primeira interação
+                        ["click", "keydown", "touchstart"].forEach((ev) =>
+                            document.addEventListener(ev, tryAutoplay, {
+                                once: false,
+                            }),
+                        );
+                    });
+            });
+
+            // ── RAZÕES PELAS QUAIS TE AMO ──────────────────────────────────
+            // SVG icons para os cards — sem emojis
+            const SVG_MOON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" fill="rgba(255,210,240,0.88)"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+            const SVG_STAR4 = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" fill="rgba(255,210,240,0.88)"><path d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg>`;
+
+            const SVG_FLOWER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="44" height="44"><ellipse cx="16" cy="8" rx="4" ry="7" fill="rgba(255,190,220,0.85)"/><ellipse cx="16" cy="8" rx="4" ry="7" fill="rgba(255,200,230,0.85)" transform="rotate(72 16 16)"/><ellipse cx="16" cy="8" rx="4" ry="7" fill="rgba(255,175,215,0.85)" transform="rotate(144 16 16)"/><ellipse cx="16" cy="8" rx="4" ry="7" fill="rgba(255,205,235,0.85)" transform="rotate(216 16 16)"/><ellipse cx="16" cy="8" rx="4" ry="7" fill="rgba(255,180,218,0.85)" transform="rotate(288 16 16)"/><circle cx="16" cy="16" r="4" fill="rgba(255,240,190,0.9)"/></svg>`;
+
+            const SVG_SPARKLE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" fill="rgba(255,210,240,0.88)"><path d="M12 1 L13.6 9.4 L22 12 L13.6 14.6 L12 23 L10.4 14.6 L2 12 L10.4 9.4 Z"/><path d="M19 3 L19.7 5.3 L22 6 L19.7 6.7 L19 9 L18.3 6.7 L16 6 L18.3 5.3 Z" fill="rgba(255,210,240,0.5)"/><path d="M5 3 L5.7 5.3 L8 6 L5.7 6.7 L5 9 L4.3 6.7 L2 6 L4.3 5.3 Z" fill="rgba(255,210,240,0.5)"/></svg>`;
+
+            const SVG_BUTTERFLY = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" fill="rgba(255,190,220,0.78)" stroke="rgba(255,210,240,0.85)" stroke-width="0.6" stroke-linecap="round"><path d="M12 12 C11 9 8 5 5 4 C2 3 2 7 4 9 C6 11 10 12 12 12Z"/><path d="M12 12 C13 9 16 5 19 4 C22 3 22 7 20 9 C18 11 14 12 12 12Z"/><path d="M12 12 C10 14 7 17 5 19 C3 20 3 17 5 15 C7 13 10 12 12 12Z"/><path d="M12 12 C14 14 17 17 19 19 C21 20 21 17 19 15 C17 13 14 12 12 12Z"/><line x1="12" y1="8" x2="12" y2="16" stroke-width="1"/><path d="M10 7 Q12 5 14 7" fill="none" stroke-width="1"/></svg>`;
+
+            const SVG_ROSE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="rgba(255,210,240,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 C9 5 7 8 7 11 C7 13.8 9.2 16 12 16 C14.8 16 17 13.8 17 11 C17 8 15 5 12 3Z"/><path d="M9 8 C8 9.5 7.5 10.2 7 11"/><path d="M15 8 C16 9.5 16.5 10.2 17 11"/><line x1="12" y1="16" x2="12" y2="21"/><path d="M9.5 19 L14.5 19"/></svg>`;
+
+            const SVG_HEART_SPARK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44"><path d="M12 20.5C12 20.5 3 14.5 3 8.5 3 5.46 5.46 3 8.5 3c1.74 0 3.28.88 3.5 2.22C12.22 3.88 13.76 3 15.5 3 18.54 3 21 5.46 21 8.5c0 6-9 12-9 12Z" fill="rgba(255,120,170,0.85)"/><path d="M19 2 L19.6 4.4 L22 5 L19.6 5.6 L19 8 L18.4 5.6 L16 5 L18.4 4.4 Z" fill="rgba(255,220,240,0.85)"/><path d="M5 1 L5.5 3 L7.5 3.5 L5.5 4 L5 6 L4.5 4 L2.5 3.5 L4.5 3 Z" fill="rgba(255,220,240,0.85)"/></svg>`;
+
+            const SVG_STAR8 = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" fill="rgba(255,210,240,0.88)"><path d="M12 2 L13.2 8 L18 4 L15 9.5 L21.5 9 L16.5 13 L21 17 L14.8 15.5 L14 22 L12 16.5 L10 22 L9.2 15.5 L3 17 L7.5 13 L2.5 9 L9 9.5 L6 4 L10.8 8 Z"/></svg>`;
+
+            const REASONS = [
+                {
+                    svg: SVG_MOON,
+                    text: "Pelo jeito que seus olhos brilham quando você sorri",
+                },
+                {
+                    svg: SVG_STAR4,
+                    text: "Por ser minha mesmo em todos os momentos difíceis",
+                },
+                {
+                    svg: SVG_FLOWER,
+                    text: "Pelo jeito que você me faz querer ser uma pessoa melhor todos os dias",
+                },
+                {
+                    svg: SVG_SPARKLE,
+                    text: "Porque com você, até o silêncio é confortável",
+                },
+                {
+                    svg: SVG_BUTTERFLY,
+                    text: "Pela forma carinhosa como você cuida de mim",
+                },
+                {
+                    svg: SVG_ROSE,
+                    text: "Por cada mensagem, cada abraço, cada beijo, cada momento nosso",
+                },
+                {
+                    svg: SVG_HEART_SPARK,
+                    text: "Porque você é meu conforto eterno",
+                },
+                {
+                    svg: SVG_STAR8,
+                    text: "Por tornar minha vida muito mais linda só existindo",
+                },
+            ];
+
+            function buildReasons() {
+                const grid = document.getElementById("reasonsGrid");
+                REASONS.forEach((r) => {
+                    const card = document.createElement("div");
+                    card.className = "reason-card";
+                    card.setAttribute("role", "button");
+                    card.setAttribute("tabindex", "0");
+                    card.setAttribute("aria-label", "Revelar razão");
+                    card.innerHTML = `
+                        <div class="reason-inner">
+                            <div class="reason-front">
+                                <span class="reason-front-icon">${r.svg}</span>
+                                <span class="reason-front-hint">Clique aqui!</span>
+                            </div>
+                            <div class="reason-back">${r.text}</div>
+                        </div>
+                    `;
+                    card.addEventListener("click", () =>
+                        card.classList.toggle("flipped"),
+                    );
+                    card.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter" || e.key === " ")
+                            card.classList.toggle("flipped");
+                    });
+                    grid.appendChild(card);
+                });
+            }
+
+            buildReasons();
+        </script>
+    </body>
+</html>
